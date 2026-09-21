@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Don't Die™ | Hanoi Marathon 2026</title>
+<meta name="theme-color" content="#D1261C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#E6B23E;
+  --wall-deep:#C98F22;
+  --shutter:#1E6A4C;
+  --red:#D1261C;
+  --blue:#2146C7;
+  --ink:#1C140D;
+  --paper:#FFF7E3;
+  --gold:#FFD23F;
+  --wood:#7A4B22;
+  --display:'Bungee', Impact, 'Arial Black', sans-serif;
+  --body:'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--wall);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.55;
+  overflow-x:hidden;
+}
+/* stucco wall texture */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .28  0 0 0 0 .05  0 0 0 .55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:0 16px}
+p{margin:0 0 .8em}
+p:last-child{margin-bottom:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+
+/* ---------- icons (Lucide, inline sprite) ---------- */
+.ic{width:1.15em;height:1.15em;flex:none;vertical-align:-.18em;fill:none;stroke:currentColor;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- signboards ---------- */
+.sign{
+  --sign-bg:var(--paper);--sign-fg:var(--ink);--sign-line:var(--red);--sign-head:var(--red);
+  position:relative;
+  background:var(--sign-bg);color:var(--sign-fg);
+  border:3px solid var(--ink);
+  padding:26px 22px 22px;
+  box-shadow:inset 0 0 0 6px var(--sign-bg), inset 0 0 0 8px var(--sign-line), 6px 6px 0 var(--ink);
+}
+.sign::before,.sign::after{
+  content:'';position:absolute;top:13px;width:9px;height:9px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.7),transparent 55%),#9A8B74;
+  border:1.5px solid var(--ink);
+}
+.sign::before{left:13px}
+.sign::after{right:13px}
+.sign--red{--sign-bg:var(--red);--sign-fg:var(--paper);--sign-line:var(--gold);--sign-head:var(--gold)}
+.sign--blue{--sign-bg:var(--blue);--sign-fg:var(--paper);--sign-line:var(--paper);--sign-head:var(--gold)}
+.sign--green{--sign-bg:var(--shutter);--sign-fg:var(--paper);--sign-line:var(--gold);--sign-head:var(--gold)}
+.sign--paper{--sign-bg:var(--paper);--sign-fg:var(--ink);--sign-line:var(--red);--sign-head:var(--red)}
+.sign--ink{--sign-bg:var(--ink);--sign-fg:var(--paper);--sign-line:var(--gold);--sign-head:var(--gold)}
+.sign h3{font-family:var(--display);font-weight:400;font-size:1.3rem;line-height:1.1;color:var(--sign-head);margin:0 0 .45em;display:flex;align-items:center;gap:.45em}
+.sign h3 .ic{width:1.4em;height:1.4em}
+
+.plate{
+  display:inline-block;
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(1.55rem,7vw,2.3rem);line-height:1.05;
+  background:var(--ink);color:var(--gold);
+  padding:.3em .6em .22em;margin:0 0 24px;
+  transform:rotate(var(--r,-1.5deg));
+  box-shadow:5px 5px 0 var(--red);
+}
+section{margin-top:64px}
+
+/* ---------- hero ---------- */
+.hero-stage{
+  position:relative;margin:0 -16px;padding:clamp(150px,40vw,300px) 22px 36px;overflow:hidden;
+  border-bottom:4px solid var(--ink);
+  background:
+    radial-gradient(ellipse 60% 18% at 30% 88%,rgba(255,176,0,.55),transparent 70%),
+    radial-gradient(ellipse 70% 14% at 75% 78%,rgba(209,38,28,.6),transparent 70%),
+    linear-gradient(180deg,#14234A,#2A1B3D 60%,#1C140D);
+}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-stage::after{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(20,20,40,.2),rgba(28,20,13,.55))}
+.hero-stage .sign{z-index:1}
+.photo-tag{position:absolute;right:12px;bottom:8px;z-index:1;font-size:.68rem;color:rgba(255,247,227,.8);font-style:italic}
+.sign--hero{text-align:center;padding:40px 18px 28px}
+.hero-kicker{font-weight:800;font-size:1rem;letter-spacing:.06em;color:var(--gold);margin:0}
+h1{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(3.2rem,17.5vw,8.4rem);line-height:.9;
+  color:var(--gold);text-shadow:4px 4px 0 var(--ink);
+  margin:.12em 0 .18em;
+}
+h1 span{display:block}
+h1 .tm{display:inline;font-size:.32em;vertical-align:top;line-height:1;margin-left:.05em}
+.hero-sub{font-weight:800;font-size:1.2rem;margin-bottom:.35em}
+.hero-meta{max-width:34ch;margin:0 auto 1.4em;opacity:.92;font-size:.98rem}
+.countdown{
+  display:inline-flex;align-items:center;gap:14px;text-align:left;
+  background:var(--paper);color:var(--ink);
+  border:3px solid var(--ink);padding:10px 18px 10px 14px;
+  transform:rotate(1.2deg);
+}
+.countdown-num{font-family:var(--display);font-size:3rem;line-height:1;color:var(--red)}
+.countdown-label{font-weight:800;font-size:.95rem;line-height:1.25;max-width:15ch}
+
+/* street banner */
+.banner{
+  position:relative;z-index:3;
+  margin:40px -6px 0;
+  background:var(--red);color:var(--gold);
+  font-family:var(--display);text-align:center;
+  font-size:clamp(.92rem,4.3vw,1.35rem);line-height:1.2;
+  padding:11px 12px 9px;
+  border:3px solid var(--ink);
+  transform:rotate(-1.4deg);
+  box-shadow:0 6px 0 rgba(28,20,13,.25);
+}
+.banner::before,.banner::after{
+  content:'';position:absolute;top:-42px;width:3px;height:44px;background:var(--ink);
+}
+.banner::before{left:18px;transform:rotate(-14deg)}
+.banner::after{right:18px;transform:rotate(14deg)}
+
+/* tube-house skyline = weekly km */
+.skyline-wrap{margin:0 -16px}
+.skyline{
+  display:flex;align-items:flex-end;gap:5px;
+  height:250px;padding:0 14px;margin-top:6px;
+}
+.house{
+  --c:#F2A7A0;--win:var(--shutter);
+  flex:1;position:relative;
+  height:var(--h);
+  background:var(--c);
+  border:3px solid var(--ink);border-bottom:none;
+  padding:0;cursor:pointer;
+  transform-origin:bottom;
+  animation:rise .75s cubic-bezier(.2,.9,.3,1.25) both;
+  animation-delay:calc(var(--i) * 80ms + 250ms);
+}
+.house::before{
+  content:'';position:absolute;inset:12px 5px 28px 5px;
+  background:conic-gradient(from 90deg at 3px 5px, var(--win) 90deg, transparent 0) -3px -5px / 12px 16px;
+}
+.house::after{
+  content:'';position:absolute;bottom:0;left:50%;width:12px;height:19px;
+  transform:translateX(-50%);background:var(--ink);border-radius:6px 6px 0 0;
+}
+.house-km{
+  position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);
+  font-family:var(--display);font-size:.68rem;line-height:1;white-space:nowrap;
+  background:var(--paper);border:2px solid var(--ink);padding:3px 4px 2px;
+}
+.house.is-now .house-km{background:var(--blue);color:var(--paper)}
+.house--race{--c:var(--red);--win:var(--gold)}
+.house--race .house-km{background:var(--gold)}
+@keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.street{
+  display:flex;gap:5px;padding:9px 14px 16px;
+  background:
+    repeating-linear-gradient(90deg,var(--gold) 0 18px,transparent 18px 34px) 0 calc(100% - 6px)/100% 3px no-repeat,
+    var(--ink);
+}
+.street span{flex:1;text-align:center;font-family:var(--display);font-size:.72rem;color:var(--paper);white-space:nowrap}
+.street span.is-now{color:var(--gold)}
+.skyline-note{font-size:.88rem;margin:12px 0 0;text-align:center;font-weight:600}
+
+/* ---------- the plan ---------- */
+.progress{margin-bottom:26px}
+.progress-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.progress-count{font-family:var(--display);font-size:1.6rem;color:var(--red);line-height:1}
+.progress-hint{font-size:.92rem;font-weight:600}
+.bar{height:18px;margin-top:14px;background:var(--wall);border:3px solid var(--ink);position:relative;overflow:hidden}
+.bar-fill{position:absolute;inset:0 auto 0 0;width:0;background:repeating-linear-gradient(-45deg,var(--red) 0 10px,#E4412F 10px 20px);transition:width .5s cubic-bezier(.2,.9,.3,1)}
+
+.weeks{list-style:none;margin:0;padding:0;display:grid;gap:26px}
+.week{scroll-margin-top:20px}
+.week:nth-child(odd){transform:rotate(-.35deg)}
+.week:nth-child(even){transform:rotate(.35deg)}
+.week-top{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.week-num{font-family:var(--display);font-size:3.2rem;line-height:.85;color:var(--sign-head);min-width:1.1em}
+.week-num .ic{width:.85em;height:.85em;vertical-align:0}
+.week-meta p{margin:0;line-height:1.3}
+.week-dates{font-weight:800;font-size:.95rem}
+.week-total{font-size:.9rem;opacity:.85}
+.now-tag{margin-left:auto;align-self:flex-start;background:var(--gold);color:var(--ink);border:2px solid var(--ink);font-weight:800;font-size:.8rem;padding:2px 9px;transform:rotate(3deg);display:none}
+.week.is-now .now-tag{display:inline-block}
+.week.is-now{box-shadow:inset 0 0 0 6px var(--sign-bg), inset 0 0 0 8px var(--sign-line), 9px 9px 0 var(--gold), 12px 12px 0 var(--ink)}
+.week-focus{font-size:1rem;margin-bottom:16px;max-width:52ch}
+
+.runs{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.run{
+  position:relative;
+  min-width:56px;height:56px;padding:0 8px;
+  border-radius:50%;
+  border:3px solid currentColor;
+  background:rgba(255,255,255,.1);
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;line-height:1;
+  transition:transform .15s ease, background .15s ease;
+}
+.run:active{transform:scale(.93)}
+.run-km{font-family:var(--display);font-size:1.25rem}
+.run-unit{font-size:.7rem;font-weight:800;margin-top:3px}
+.run--long{border-radius:999px;padding:0 16px;min-width:86px}
+.run--race{border-radius:999px;padding:0 24px;height:72px;min-width:170px;border-color:var(--gold);color:var(--gold)}
+.run--race .run-km{font-size:1.6rem}
+.run[aria-pressed="true"]{background:var(--gold);color:var(--ink);border-color:var(--ink)}
+.run[aria-pressed="true"]::after{
+  content:'✓';position:absolute;top:-8px;right:-6px;
+  width:24px;height:24px;border-radius:50%;
+  background:var(--red);color:var(--paper);border:2px solid var(--ink);
+  font-size:.8rem;font-weight:800;display:grid;place-items:center;
+}
+.sign--paper .run{background:transparent}
+
+/* ---------- how to run it ---------- */
+.rules{display:grid;gap:22px}
+@media (min-width:620px){.rules{grid-template-columns:1fr 1fr}}
+.rules .sign:nth-child(1){transform:rotate(-.8deg)}
+.rules .sign:nth-child(2){transform:rotate(.6deg)}
+.rules .sign:nth-child(3){transform:rotate(.4deg)}
+.rules .sign:nth-child(4){transform:rotate(-.6deg)}
+
+/* ---------- race day ---------- */
+.road-box{padding-top:30px}
+.road{
+  position:relative;display:flex;height:56px;
+  border:3px solid var(--ink);
+}
+.road::after{
+  content:'';position:absolute;left:0;right:0;top:50%;height:3px;transform:translateY(-50%);
+  background:repeating-linear-gradient(90deg,var(--paper) 0 14px,transparent 14px 26px);
+}
+.seg{background:var(--c)}
+.seg + .seg{border-left:3px solid var(--ink)}
+.road-marks{position:relative;height:26px;margin-top:6px;font-family:var(--display);font-size:.72rem}
+.road-marks span{position:absolute;top:0;transform:translateX(-50%)}
+.road-marks span:first-child{transform:none}
+.road-marks span:last-child{transform:translateX(-100%)}
+.legs{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:16px}
+.leg{border-left:12px solid var(--c);padding:2px 0 2px 14px}
+.leg-km{font-family:var(--display);font-size:1.35rem;line-height:1.1;margin:0 0 4px;display:flex;align-items:center;gap:.4em}
+.leg-km .ic{width:1.55em;height:1.55em;padding:.22em;border-radius:50%;background:var(--c);color:var(--fg,var(--paper));border:2px solid var(--ink);stroke-width:2.5}
+
+/* ---------- menu board ---------- */
+.board{
+  background:
+    radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.07),transparent 60%),
+    var(--shutter);
+  color:var(--paper);
+  border:12px solid var(--wood);
+  outline:3px solid var(--ink);
+  box-shadow:inset 0 0 0 3px var(--ink), 8px 8px 0 var(--ink);
+  padding:28px 22px 24px;
+  transform:rotate(.5deg);
+}
+.board-sub{font-style:italic;opacity:.9;margin-bottom:22px}
+.menu{margin:0;display:grid;gap:22px}
+.menu-head{display:flex;align-items:baseline;gap:8px;margin:0 0 6px}
+.menu-head dt{font-family:var(--display);color:var(--gold);font-size:1.15rem;line-height:1.1;white-space:nowrap;display:flex;align-items:center;gap:.4em}
+.menu-head .dots{flex:1;border-bottom:3px dotted rgba(255,247,227,.55);transform:translateY(-4px);min-width:16px}
+.menu-head .price{font-weight:800;white-space:nowrap}
+.menu dd{margin:0;font-size:.98rem;max-width:56ch}
+
+/* ---------- sub-5 clock ---------- */
+.clock{
+  background:#000;color:#FFB000;
+  border:3px solid var(--ink);
+  box-shadow:inset 0 0 0 6px #2a2a2a, inset 0 0 0 8px #555, 6px 6px 0 var(--ink);
+  padding:28px 20px 22px;text-align:center;
+}
+.clock-label{color:var(--paper);font-weight:600;font-size:.9rem;margin:0;display:inline-flex;align-items:center;gap:.4em}
+.led{
+  font-family:var(--display);
+  font-size:clamp(3.2rem,17vw,6.4rem);line-height:1;letter-spacing:.02em;
+  text-shadow:0 0 6px rgba(255,176,0,.85),0 0 22px rgba(255,120,0,.55);
+  margin:.12em 0 .1em;
+}
+.led-pace{font-family:var(--display);font-size:1.3rem;color:#FF5A36;text-shadow:0 0 10px rgba(255,90,54,.6);margin:0 0 20px}
+.splits{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#333;border:1px solid #333;text-align:center}
+.splits div{background:#000;padding:10px 4px}
+.splits b{display:block;font-weight:600;color:var(--paper);font-size:.78rem;margin-bottom:3px}
+.splits span{font-family:var(--display);font-size:1rem;text-shadow:0 0 6px rgba(255,176,0,.7)}
+.clock-note{color:rgba(255,247,227,.75);font-size:.82rem;margin:14px 0 0}
+.sub5-copy{margin-top:22px;transform:rotate(-.4deg)}
+
+/* ---------- postcards ---------- */
+.postcards{display:grid;grid-template-columns:1fr 1fr;gap:26px 16px;padding:8px 4px 0}
+@media (min-width:620px){.postcards{grid-template-columns:repeat(4,1fr)}}
+.pc{
+  position:relative;margin:0;
+  background:#FFFDF6;padding:8px 8px 12px;
+  border:2px solid var(--ink);
+  box-shadow:4px 5px 0 rgba(28,20,13,.35);
+  transform:rotate(var(--r,0deg));
+}
+.pc-img{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--shutter);color:var(--gold)}
+.pc-img img{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
+.pc-fallback{position:absolute;inset:0;display:grid;place-items:center}
+.pc-fallback .ic{width:38%;height:38%}
+.pc-img.failed img{display:none}
+.pc figcaption{font-style:italic;font-size:.86rem;line-height:1.3;margin-top:8px}
+.tape{position:absolute;top:-11px;left:50%;width:66px;height:22px;transform:translateX(-50%) rotate(var(--t,-4deg));background:rgba(255,210,63,.78);border:1px solid rgba(28,20,13,.25)}
+
+/* ---------- finale ---------- */
+.finale{text-align:center;padding:34px 20px 30px}
+.finale-kicker{font-weight:800;color:var(--gold);margin-bottom:.3em}
+.finale h2{font-family:var(--display);font-weight:400;font-size:clamp(2.3rem,11vw,4.6rem);line-height:.95;color:var(--gold);text-shadow:3px 3px 0 var(--ink);margin:0 0 .45em}
+.finale p{max-width:46ch;margin-left:auto;margin-right:auto}
+.go{
+  margin-top:22px;
+  font-family:var(--display);font-size:clamp(1.2rem,6vw,1.7rem);
+  background:var(--gold);color:var(--ink);
+  border:3px solid var(--ink);padding:14px 24px 12px;
+  box-shadow:5px 5px 0 var(--ink);cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.go:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink)}
+footer{text-align:center;padding:40px 0 calc(40px + env(safe-area-inset-bottom))}
+.foot-line{font-family:var(--display);font-size:.95rem;margin-bottom:10px}
+.credits{font-size:.75rem;opacity:.8;max-width:48ch;margin:0 auto}
+
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+
+@media (prefers-reduced-motion:reduce){
+  .house{animation:none}
+  .bar-fill,.run,.go{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Lucide icons (ISC licence), defined once and reused -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+  <symbol id="i-foot" viewBox="0 0 24 24"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4"/><path d="M4 13h4"/></symbol>
+  <symbol id="i-turtle" viewBox="0 0 24 24"><path d="m12 10 2 4v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3a8 8 0 1 0-16 0v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3l2-4h4Z"/><path d="M4.82 7.9 8 10"/><path d="M15.18 7.9 12 10"/><path d="M16.93 10H20a2 2 0 0 1 0 4H2"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></symbol>
+  <symbol id="i-party" viewBox="0 0 24 24"><path d="M5.8 11.3 2 22l10.7-3.79"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17"/><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"/><path d="M11 13c1.93 1.93 2.830 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.450-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"/><path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"/><path d="m2.3 2.3 7.286 7.286"/><circle cx="11" cy="11" r="2"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></symbol>
+</svg>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-stage">
+      <img class="hero-photo" src="https://images.unsplash.com/photo-1526675094705-751b333fad0c?auto=format&fit=crop&w=1400&q=70" alt="" fetchpriority="high">
+      <div class="sign sign--red sign--hero">
+        <p class="hero-kicker">Hà Nội 2026</p>
+        <h1><span>Don't</span><span>Die<span class="tm">™</span></span></h1>
+        <p class="hero-sub">Hanoi Marathon Training Plan</p>
+        <p class="hero-meta">7-week run / walk build. Goal: under 5:00. Mission: survive 42.195 km and enjoy every damn minute.</p>
+        <div class="countdown" aria-live="polite">
+          <span class="countdown-num" id="cd-num">–</span>
+          <span class="countdown-label" id="cd-label">sleeps till race day</span>
+        </div>
+      </div>
+      <span class="photo-tag">Busy night in Hanoi</span>
+    </div>
+
+    <p class="banner">Run slow. Eat early. Walk before you need to.</p>
+
+    <div class="skyline-wrap">
+      <div class="skyline" id="skyline"></div>
+      <div class="street" id="street" aria-hidden="true"></div>
+    </div>
+    <p class="skyline-note">Every house is a week, sized by kilometres. Tap one to jump to it.</p>
+  </header>
+
+  <main>
+    <section aria-labelledby="plan-h">
+      <h2 class="plate" id="plan-h">The plan</h2>
+
+      <div class="sign sign--paper progress">
+        <div class="progress-row">
+          <span class="progress-count" id="prog-count">0 / 27</span>
+          <span class="progress-hint" id="prog-hint">runs in the bank. Tap a run when it's done.</span>
+        </div>
+        <div class="bar" aria-hidden="true"><div class="bar-fill" id="bar-fill"></div></div>
+      </div>
+
+      <ol class="weeks" id="weeks"></ol>
+    </section>
+
+    <section aria-labelledby="how-h">
+      <h2 class="plate" id="how-h" style="--r:1.2deg">How to run it</h2>
+      <div class="rules">
+        <div class="sign sign--blue">
+          <h3><svg class="ic" aria-hidden="true"><use href="#i-msg"/></svg>Easy runs</h3>
+          <p>Conversational pace. Finish feeling like you could keep going.</p>
+        </div>
+        <div class="sign sign--paper">
+          <h3><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>Long runs</h3>
+          <p>Slow and controlled. Practise your run/walk rhythm from the start, not only when tired.</p>
+        </div>
+        <div class="sign sign--green">
+          <h3><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>Marathon pace</h3>
+          <p>Target cruising pace is around 7:00–7:10/km if sub-5 is on.</p>
+        </div>
+        <div class="sign sign--red">
+          <h3><svg class="ic" aria-hidden="true"><use href="#i-foot"/></svg>Walking is strategy</h3>
+          <p>A 9 min run / 1 min walk rhythm can preserve your legs and still keep the average moving.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="race-h">
+      <h2 class="plate" id="race-h" style="--r:-2deg">Race-day strategy</h2>
+      <div class="sign sign--paper road-box">
+        <div class="road" role="img" aria-label="Race split into five legs: 0 to 10, 10 to 25, 25 to 32, 32 to 37 and 37 to 42.2 kilometres">
+          <div class="seg" style="flex:10;--c:var(--shutter)"></div>
+          <div class="seg" style="flex:15;--c:var(--blue)"></div>
+          <div class="seg" style="flex:7;--c:var(--gold)"></div>
+          <div class="seg" style="flex:5;--c:#EE7A1E"></div>
+          <div class="seg" style="flex:5.2;--c:var(--red)"></div>
+        </div>
+        <div class="road-marks" aria-hidden="true">
+          <span style="left:0">0</span>
+          <span style="left:23.7%">10</span>
+          <span style="left:59.2%">25</span>
+          <span style="left:75.8%">32</span>
+          <span style="left:87.7%">37</span>
+          <span style="left:100%">42.2</span>
+        </div>
+        <ol class="legs">
+          <li class="leg" style="--c:var(--shutter)"><p class="leg-km"><svg class="ic" aria-hidden="true"><use href="#i-turtle"/></svg>0–10 km</p><p>7:00–7:10/km-ish. HOLD BACK. Enjoy the start.</p></li>
+          <li class="leg" style="--c:var(--blue)"><p class="leg-km"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>10–25 km</p><p>Settle in. Run/walk. Fuel regularly. Take in Hanoi.</p></li>
+          <li class="leg" style="--c:var(--gold);--fg:var(--ink)"><p class="leg-km"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>25–32 km</p><p>Assess the legs. Stay patient. No heroics.</p></li>
+          <li class="leg" style="--c:#EE7A1E"><p class="leg-km"><svg class="ic" aria-hidden="true"><use href="#i-trend"/></svg>32–37 km</p><p>If you're good, gradually push. If not, protect the finish.</p></li>
+          <li class="leg" style="--c:var(--red)"><p class="leg-km"><svg class="ic" aria-hidden="true"><use href="#i-party"/></svg>37–42.2 km</p><p>Whatever works: run, walk, dance, high-five strangers. Keep moving.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section aria-labelledby="fuel-h">
+      <h2 class="plate" id="fuel-h" style="--r:1deg">Fuel, hydrate, survive</h2>
+      <div class="board">
+        <p class="board-sub">The boring stuff that gets you to kilometre 42</p>
+        <dl class="menu">
+          <div>
+            <div class="menu-head"><dt><svg class="ic" aria-hidden="true"><use href="#i-zap"/></svg>Fuel</dt><span class="dots"></span><span class="price">30–90 g/hr</span></div>
+            <dd>Practise taking carbohydrates during long runs. Start around 30–60 g/hour and build toward roughly 60–90 g/hour if your stomach tolerates it. Use the same products in training that you plan to race with.</dd>
+          </div>
+          <div>
+            <div class="menu-head"><dt><svg class="ic" aria-hidden="true"><use href="#i-drop"/></svg>Fluids</dt><span class="dots"></span><span class="price">regularly</span></div>
+            <dd>Drink regularly rather than waiting until you're thirsty and destroyed. Practise this on long runs, especially in warm conditions.</dd>
+          </div>
+          <div>
+            <div class="menu-head"><dt><svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>The long-run cap</dt><span class="dots"></span><span class="price">22–25 km</span></div>
+            <dd>A controlled 22–25 km run is enough. You do not need a heroic 30 km training run. Finish healthy rather than proving a point.</dd>
+          </div>
+          <div>
+            <div class="menu-head"><dt><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>Pain rule</dt><span class="dots"></span><span class="price">back off</span></div>
+            <dd>Normal fatigue is fine. Persistent, worsening, sharp or altered-gait pain is not. Back off and recover rather than forcing the schedule.</dd>
+          </div>
+          <div>
+            <div class="menu-head"><dt><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Tattoo rule</dt><span class="dots"></span><span class="price">~1 week</span></div>
+            <dd>For the large bicep tattoo: give it about a week before restarting running, assuming the skin is healing normally and your artist's aftercare instructions agree.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section aria-labelledby="sub5-h">
+      <h2 class="plate" id="sub5-h" style="--r:-1deg">Sub-5 math</h2>
+      <div class="clock">
+        <p class="clock-label"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg>Finish clock to beat</p>
+        <p class="led">4:59:59</p>
+        <p class="led-pace">≈ 7:06/km average</p>
+        <div class="splits">
+          <div><b>10 km</b><span>1:11:00</span></div>
+          <div><b>Half</b><span>2:29:48</span></div>
+          <div><b>25 km</b><span>2:57:30</span></div>
+          <div><b>32 km</b><span>3:47:12</span></div>
+          <div><b>37 km</b><span>4:22:42</span></div>
+          <div><b>Finish</b><span>4:59:35</span></div>
+        </div>
+        <p class="clock-note">Clock at each checkpoint on a dead-even 7:06/km. Run/walk will wobble these, and that's fine.</p>
+      </div>
+      <div class="sign sign--paper sub5-copy">
+        <p>You don't need to hold 7:06 continuously if your run/walk breaks are short and planned. The key is to avoid burning matches early.</p>
+        <p>Your Knysna experience and ultra background mean this is a stretch goal worth attempting, not a reason to train stupidly.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="pc-h">
+      <h2 class="plate" id="pc-h" style="--r:1.5deg">Take the photo</h2>
+      <div class="postcards">
+        <figure class="pc" style="--r:-3deg;--t:-5deg">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="pc-img"><img src="https://images.unsplash.com/photo-1678461863258-185d001d7a1b?auto=format&fit=crop&w=700&q=70" alt="Tháp Rùa, the Turtle Tower on Hoàn Kiếm Lake, at sunset" loading="lazy"><span class="pc-fallback"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg></span></div>
+          <figcaption>Tháp Rùa, Hoàn Kiếm Lake</figcaption>
+        </figure>
+        <figure class="pc" style="--r:2.5deg;--t:3deg">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="pc-img"><img src="https://images.unsplash.com/photo-1611195328596-d8dcf57f5cea?auto=format&fit=crop&w=700&q=70" alt="The red Thê Húc Bridge on Hoàn Kiếm Lake in winter fog" loading="lazy"><span class="pc-fallback"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg></span></div>
+          <figcaption>Thê Húc Bridge</figcaption>
+        </figure>
+        <figure class="pc" style="--r:2deg;--t:-2deg">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="pc-img"><img src="https://images.unsplash.com/photo-1613131145282-9476375618e1?auto=format&fit=crop&w=700&q=70" alt="Motorbikes riding past buildings on an Old Quarter street" loading="lazy"><span class="pc-fallback"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg></span></div>
+          <figcaption>Old Quarter traffic</figcaption>
+        </figure>
+        <figure class="pc" style="--r:-2.5deg;--t:4deg">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="pc-img"><img src="https://images.unsplash.com/photo-1724908224391-184ec26151de?auto=format&fit=crop&w=700&q=70" alt="An old building with rows of windows on an Old Quarter street corner" loading="lazy"><span class="pc-fallback"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg></span></div>
+          <figcaption>Old Quarter corner</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section aria-labelledby="final-h">
+      <div class="sign sign--red finale">
+        <p class="finale-kicker">The only non-negotiable</p>
+        <h2 id="final-h">Have a fucking great day.</h2>
+        <p>This is your first international marathon. If Hanoi has music, dance. If people cheer, high-five them. If you see something amazing, take the photo.</p>
+        <p>The clock is the bonus; getting the medal while experiencing the city is the mission.</p>
+        <button class="go" id="go" type="button">Let's fucking go</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="foot-line">Hà Nội • 42.195 km • 8 Nov 2026</p>
+    <p class="credits">Photos from Unsplash by Florian Wehde, Ryan Le, Harry Tran, Elliot Andrews and Anh Bui. Icons by Lucide.</p>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const WEEKS = [
+    { runs:[5,5,5,8],        focus:'Easy re-entry after tattoo. Run/walk everything and keep it comfortable.', v:'paper' },
+    { runs:[5,6,5,12],       focus:'Same again, a touch longer. Run/walk the long run from the first kilometre.', v:'red' },
+    { runs:[5,6,6,16],       focus:'Long run stays easy. Practise food, fluids and walk breaks.', v:'green' },
+    { runs:[6,7,6,20],       focus:'Build endurance. Keep the long run deliberately slow.', v:'blue' },
+    { runs:[6,8,6,'22–25'],  focus:'Peak long run. This is your biggest confidence-builder.', v:'red' },
+    { runs:[5,6,5,12],       focus:'Taper. Reduce volume and arrive fresh.', v:'green' },
+    { runs:[5,5,'42.195'], race:true, focus:'Two easy shakeouts early in the week, then 42.195 km Hanoi. Start conservatively, fuel, walk, dance, enjoy.', v:'ink' }
+  ];
+  const HOUSE_COLORS = ['#F2A7A0','#9CCBEA','#A9D9B8','#FFF1CF','#C9B6E4','#F7B982','#8FD3C7'];
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const START = new Date(2026, 8, 21);                    // Mon 21 Sep 2026
+  const RACE  = new Date('2026-11-08T00:00:00+07:00');    // Sun 8 Nov, Hanoi time
+  const KEY = 'hanoi-dontdie-ticks-v3';
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FLAG = '<svg class="ic" aria-hidden="true"><use href="#i-flag"/></svg>';
+
+  const weekKm = w => {
+    if (w.race) return { lo:42.195, hi:42.195, label:'42.2' };
+    let lo = 0, hi = 0;
+    w.runs.forEach(r => {
+      if (typeof r === 'number') { lo += r; hi += r; }
+      else { const [a,b] = r.split('–').map(Number); lo += a; hi += b; }
+    });
+    return { lo, hi, label: lo === hi ? String(lo) : `${lo}–${hi}` };
+  };
+
+  const dateRange = i => {
+    const s = new Date(START); s.setDate(s.getDate() + i*7);
+    const e = new Date(s); e.setDate(e.getDate() + 6);
+    return s.getMonth() === e.getMonth()
+      ? `${s.getDate()}–${e.getDate()} ${MONTHS[e.getMonth()]}`
+      : `${s.getDate()} ${MONTHS[s.getMonth()]} – ${e.getDate()} ${MONTHS[e.getMonth()]}`;
+  };
+
+  const currentWeek = () => {
+    const t = new Date(); t.setHours(0,0,0,0);
+    const d = Math.floor((t - START) / 864e5);
+    return (d < 0 || d >= 49) ? -1 : Math.floor(d / 7);
+  };
+  const nowIdx = currentWeek();
+
+  /* skyline */
+  const skyline = document.getElementById('skyline');
+  const street = document.getElementById('street');
+  const maxKm = 50;
+  WEEKS.forEach((w, i) => {
+    const km = weekKm(w);
+    const mid = (km.lo + km.hi) / 2;
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'house' + (w.race ? ' house--race' : '') + (i === nowIdx ? ' is-now' : '');
+    b.style.setProperty('--h', `${Math.round(40 + (mid / maxKm) * 165)}px`);
+    b.style.setProperty('--i', i);
+    if (!w.race) b.style.setProperty('--c', HOUSE_COLORS[i % HOUSE_COLORS.length]);
+    b.setAttribute('aria-label', w.race ? 'Race week, 42.195 km' : `Week ${i+1}, ${km.label} km`);
+    b.innerHTML = `<span class="house-km">${km.label}</span>`;
+    b.addEventListener('click', () => {
+      document.getElementById(`wk-${i+1}`).scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block:'start' });
+    });
+    skyline.appendChild(b);
+
+    const s = document.createElement('span');
+    s.textContent = w.race ? 'Race' : `Wk ${i+1}`;
+    if (i === nowIdx) s.className = 'is-now';
+    street.appendChild(s);
+  });
+
+  /* weeks */
+  const list = document.getElementById('weeks');
+  const TOTAL = WEEKS.reduce((n, w) => n + w.runs.length, 0);
+  WEEKS.forEach((w, i) => {
+    const km = weekKm(w);
+    const li = document.createElement('li');
+    li.id = `wk-${i+1}`;
+    li.className = `sign sign--${w.v} week` + (i === nowIdx ? ' is-now' : '');
+    const runs = w.runs.map((r, j) => {
+      const last = j === w.runs.length - 1;
+      const isRace = w.race && last;
+      const isLong = !w.race && last;
+      const cls = isRace ? 'run run--race' : isLong ? 'run run--long' : 'run';
+      const unit = isRace ? 'km, race day' : isLong ? 'km long' : 'km';
+      const label = isRace ? 'Race day, 42.195 km' : `Week ${i+1}, ${isLong ? 'long run' : (w.race ? 'shakeout ' : 'run ') + (j+1)}, ${r} km`;
+      return `<button type="button" class="${cls}" data-id="w${i+1}r${j}" aria-pressed="false" aria-label="${label}"><span class="run-km">${r}</span><span class="run-unit">${unit}</span></button>`;
+    }).join('');
+    li.innerHTML = `
+      <div class="week-top">
+        <span class="week-num">${w.race ? FLAG : i+1}</span>
+        <div class="week-meta">
+          <p class="week-dates">${w.race ? 'Race week' : 'Week ' + (i+1)}: ${dateRange(i)}</p>
+          <p class="week-total">${w.race ? 'Race on Sunday 8 November' : km.label + ' km total'}</p>
+        </div>
+        <span class="now-tag">This week</span>
+      </div>
+      <p class="week-focus">${w.focus}</p>
+      <div class="runs">${runs}</div>`;
+    list.appendChild(li);
+  });
+
+  /* ticks + storage */
+  let ticks = new Set();
+  const countEl = document.getElementById('prog-count');
+  const hintEl = document.getElementById('prog-hint');
+  const fillEl = document.getElementById('bar-fill');
+
+  const render = () => {
+    document.querySelectorAll('.run').forEach(b => {
+      b.setAttribute('aria-pressed', ticks.has(b.dataset.id) ? 'true' : 'false');
+    });
+    const n = ticks.size;
+    countEl.textContent = `${n} / ${TOTAL}`;
+    fillEl.style.width = `${(n / TOTAL) * 100}%`;
+    if (n === TOTAL) hintEl.textContent = 'Every run done. Medal secured. Legend.';
+    else if (n === 0 && nowIdx === -1 && new Date() < START) hintEl.textContent = "runs in the bank. Week 1 starts Mon 21 Sep. Tap a run when it's done.";
+    else hintEl.textContent = "runs in the bank. Tap a run when it's done.";
+  };
+
+  const save = async () => {
+    const data = JSON.stringify([...ticks]);
+    try {
+      if (window.storage) await window.storage.set(KEY, data, false);
+      else window.localStorage.setItem(KEY, data);
+    } catch (e) { console.error('Could not save ticks', e); }
+  };
+  const load = async () => {
+    try {
+      if (window.storage) {
+        const r = await window.storage.get(KEY, false);
+        if (r && r.value) ticks = new Set(JSON.parse(r.value));
+      } else {
+        const v = window.localStorage.getItem(KEY);
+        if (v) ticks = new Set(JSON.parse(v));
+      }
+    } catch (e) { /* nothing saved yet */ }
+    render();
+  };
+
+  list.addEventListener('click', e => {
+    const b = e.target.closest('.run');
+    if (!b) return;
+    const id = b.dataset.id;
+    if (ticks.has(id)) ticks.delete(id);
+    else {
+      ticks.add(id);
+      if (b.classList.contains('run--race') || ticks.size === TOTAL) confetti(260);
+      else if (b.classList.contains('run--long')) confetti(70, b);
+    }
+    render(); save();
+  });
+
+  render(); load();
+
+  /* photo fallbacks: if a photo can't load, show the illustrated version */
+  const heroImg = document.querySelector('.hero-photo');
+  const hideHero = () => { heroImg.remove(); document.querySelector('.photo-tag')?.remove(); };
+  if (heroImg.complete && heroImg.naturalWidth === 0) hideHero(); else heroImg.addEventListener('error', hideHero);
+  document.querySelectorAll('.pc-img img').forEach(img => {
+    img.addEventListener('error', () => img.parentElement.classList.add('failed'));
+  });
+
+  /* countdown */
+  const cdNum = document.getElementById('cd-num');
+  const cdLabel = document.getElementById('cd-label');
+  const tick = () => {
+    const ms = RACE - new Date();
+    if (ms > 0) {
+      const d = Math.ceil(ms / 864e5);
+      cdNum.textContent = d;
+      cdLabel.textContent = d === 1 ? 'sleep till race day. Eat carbs.' : 'sleeps till race day, Sunday 8 November';
+    } else if (ms > -864e5) {
+      cdNum.textContent = '0';
+      cdLabel.textContent = "It's race day. Go have the best day.";
+    } else {
+      cdNum.textContent = '✓';
+      cdLabel.textContent = 'Hanoi: done. Medal on.';
+    }
+  };
+  tick(); setInterval(tick, 60000);
+
+  /* confetti */
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  const COLORS = ['#D1261C','#FFD23F','#2146C7','#FFF7E3','#1E6A4C'];
+  let parts = [], raf = null;
+  const resize = () => {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  };
+  addEventListener('resize', resize); resize();
+
+  function confetti(count, fromEl) {
+    if (reduceMotion) return;
+    let ox = innerWidth / 2, oy = innerHeight * 0.65;
+    if (fromEl) { const r = fromEl.getBoundingClientRect(); ox = r.left + r.width/2; oy = r.top + r.height/2; }
+    for (let k = 0; k < count; k++) {
+      const a = -Math.PI/2 + (Math.random() - .5) * 1.9;
+      const sp = 7 + Math.random() * 11;
+      parts.push({
+        x: ox, y: oy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
+        w: 6 + Math.random() * 7, h: 4 + Math.random() * 6,
+        rot: Math.random() * 6, vr: (Math.random() - .5) * .4,
+        c: COLORS[k % COLORS.length], life: 0
+      });
+    }
+    if (!raf) raf = requestAnimationFrame(step);
+  }
+  function step() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    parts = parts.filter(p => p.y < innerHeight + 40 && p.life < 240);
+    parts.forEach(p => {
+      p.vy += 0.32; p.vx *= 0.985; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life++;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.strokeStyle = '#1C140D'; ctx.lineWidth = 1; ctx.strokeRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    raf = parts.length ? requestAnimationFrame(step) : null;
+    if (!raf) ctx.clearRect(0, 0, innerWidth, innerHeight);
+  }
+
+  const go = document.getElementById('go');
+  go.addEventListener('click', () => {
+    confetti(280, go);
+    go.textContent = "LET'S FUCKING GO";
+  });
+})();
+</script>
+</body>
+</html>
